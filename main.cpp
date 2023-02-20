@@ -1,9 +1,6 @@
 #include "template.h"
-using namespace std;
 
-void solve() {
-
-}
+void solve();
 
 int main()
 {
