@@ -72,3 +72,4 @@ CMakeLists.txt.user*
 *.exe
 
 .build/
+.pro.user
