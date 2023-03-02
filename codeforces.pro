@@ -11,3 +11,5 @@ SOURCES += \
 
 HEADERS += \
     template.h
+
+DISTFILES +=
