@@ -22,6 +22,8 @@ using std::streamsize;
 using std::string;
 using std::tuple;
 using std::vector;
+using std::set;
+using std::unreachable_sentinel;
 
 namespace rs = std::ranges;
 namespace vs = std::views;
@@ -33,6 +35,7 @@ using namespace vs;
 #define NO "NO"
 #define ll long long
 #define cauto const auto
+#define all(x) std::begin(x), std::end(x)
 
 inline void fast_io() {
   ios_base::sync_with_stdio(false);
@@ -71,4 +74,19 @@ vector<T> getInput(signed_integral auto n) {
   vector<T> vec(n);
   copy_n(istream_iterator<T>(cin), n, begin(vec));
   return vec;
+}
+
+vector<int> splitDigitsReversed(integral auto n) {
+  vector<int> v;
+  while (n) {
+    v.push_back(n % 10);
+    n /= 10;
+  }
+  return v;
+}
+
+vector<int> splitDigits(integral auto n) {
+  auto v{splitDigitsReversed(n)};
+  std::reverse(begin(v), end(v));
+  return v;
 }
