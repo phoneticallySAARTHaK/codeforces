@@ -1,10 +1,11 @@
 #pragma once
 #include <bits/stdc++.h>
+using std::accumulate;
 using std::apply;
 using std::cerr;
 using std::cin;
-using std::cout;
 using std::conjunction;
+using std::cout;
 using std::integral;
 using std::ios_base;
 using std::is_fundamental;
@@ -13,15 +14,14 @@ using std::istream_iterator;
 using std::map;
 using std::numeric_limits;
 using std::pair;
+using std::ref;
+using std::semiregular;
 using std::setw;
+using std::signed_integral;
 using std::streamsize;
 using std::string;
-using std::ref;
 using std::tuple;
 using std::vector;
-using std::semiregular;
-using std::signed_integral;
-using std::accumulate;
 
 namespace rs = std::ranges;
 namespace vs = std::views;
@@ -49,7 +49,8 @@ template <typename T = int, typename N = int>
 void discard(N n = 1) {
   // https://stackoverflow.com/questions/62940748/why-stdistream-iterator-with-multiple-copy-n-always-writes-firs-value
   // This comes down to a perhaps unintuitive fact of istream_iterator:
-  //    it doesn't read when you dereference it, but instead when you advance (or construct) it.
+  //    it doesn't read when you dereference it, but instead when you advance
+  //    (or construct) it.
   auto it{istream_iterator<T>(cin)};
   advance(it, n - 1, istream_iterator<T>{});
 }
@@ -60,20 +61,14 @@ void discard(N n = 1) {
 template <semiregular ...T>
 auto getInput() {
   tuple<T...> tpl;
-  apply([](auto& ...args) { (cin >> ... >> args); }, tpl);
-
+  apply([](auto &...args) { (cin >> ... >> args); }, tpl);
   assert(cin.good() && "Input failure");
-
   return tpl;
 }
 
-template<semiregular T>
+template <semiregular T>
 vector<T> getInput(signed_integral auto n) {
   vector<T> vec(n);
   copy_n(istream_iterator<T>(cin), n, begin(vec));
   return vec;
 }
-
-
-
-
