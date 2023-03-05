@@ -21,6 +21,7 @@ using std::tuple;
 using std::vector;
 using std::semiregular;
 using std::signed_integral;
+using std::accumulate;
 
 namespace rs = std::ranges;
 namespace vs = std::views;
