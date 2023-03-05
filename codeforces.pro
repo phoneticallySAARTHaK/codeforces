@@ -10,6 +10,7 @@ SOURCES += \
         solve.cpp
 
 HEADERS += \
-    template.h
+    template.h \
+    tests.h
 
 DISTFILES +=
