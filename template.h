@@ -20,6 +20,7 @@ using std::ref;
 using std::tuple;
 using std::vector;
 using std::semiregular;
+using std::signed_integral;
 
 namespace rs = std::ranges;
 namespace vs = std::views;
@@ -54,6 +55,7 @@ void discard(N n = 1) {
 
 // Fold expression, parameter
 // packshttps://www.scs.stanford.edu/~dm/blog/param-pack.html
+// (See testGetInput for usage)
 template <semiregular ...T>
 auto getInput() {
   tuple<T...> tpl;
@@ -62,6 +64,13 @@ auto getInput() {
   assert(cin.good() && "Input failure");
 
   return tpl;
+}
+
+template<semiregular T>
+vector<T> getInput(signed_integral auto n) {
+  vector<T> vec(n);
+  copy_n(istream_iterator<T>(cin), n, begin(vec));
+  return vec;
 }
 
 
