@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TEMPLATE_H
+#define TEMPLATE_H
 
 // Headers
 #include <bits/stdc++.h>
@@ -13,6 +14,7 @@ using std::conjunction;
 using std::cout;
 using std::integral;
 using std::invoke;
+using std::invocable;
 using std::ios_base;
 using std::is_fundamental;
 using std::is_integral;
@@ -51,8 +53,9 @@ using namespace vs;
 #define NO "NO"
 #define ll long long
 #define cauto const auto
-#define all(x) std::begin(x), std::end(x)
+#define all_of(x) std::begin(x), std::end(x)
 #define input_assert(is) assert(is.good() && "Input failure");
+#define size_type_t const signed_integral auto
 //
 
 // concepts
@@ -84,8 +87,13 @@ inline ostream &operator<<(ostream &os, pair<T, T> &p) {
 
 // Utility functions
   // Functors
-[[maybe_unused]] cauto increment = [](signed_integral auto &p) { p++; };
-[[maybe_unused]] cauto decrement = [](signed_integral auto &p) { p--; };
+struct increment {
+  auto operator()(signed_integral auto p) { return ++p; }
+};
+
+struct decrement {
+  auto operator()(signed_integral auto p) { return --p; }
+};
   //
 
   // Input Utils
@@ -94,8 +102,10 @@ inline void fast_io() {
   cin.tie(NULL);
 }
 
-inline void clear(int delim = '\n', std::istream& is = cin) {
-  is.ignore(numeric_limits<streamsize>::max(), delim);
+inline void clear(auto count = numeric_limits<streamsize>::max(),
+                  int delim = '\n',
+                  std::istream& is = cin) {
+  is.ignore(count, delim);
   is.clear();
 }
 
@@ -109,8 +119,13 @@ void discard(N n = 1, std::istream& is = cin) {
   advance(it, n - 1, istream_iterator<T>{});
 }
 
-// Fold expression, parameter
-// packshttps://www.scs.stanford.edu/~dm/blog/param-pack.html
+enum class rd_mode {
+  buffer,
+  vector,
+};
+
+// Fold expression, parameter packs
+// https://www.scs.stanford.edu/~dm/blog/param-pack.html
 // Returns a tuple, which can be destructured. (See testGetInput for usage)
 template <istreamable ...T>
 tuple<T...> input(std::istream& is = cin) {
@@ -121,12 +136,22 @@ tuple<T...> input(std::istream& is = cin) {
 }
 
 // Read 'n' objects of type 'T', and return a vector
-template <istreamable T, typename Proj = std::identity >
-vector<T> input(signed_integral auto n, Proj proj = {}, std::istream& is = cin) {
-  vector<T> vec(n);
+template <istreamable T, typename Proj = std::identity>
+vector<T> input(size_type_t size, Proj proj = {}, std::istream& is = cin) {
+  vector<T> vec(size);
   for_each(vec, [&is, &proj](auto &el) { is >> el; invoke(proj, el);});
   input_assert(is);
   return vec;
+}
+
+// Read all input as string
+template <rd_mode mode = rd_mode::buffer>
+string input(size_type_t size, std::istream& is = cin) {
+    string text, str;
+    text.reserve(size);
+    while (ssize(text) < size && is >> str)
+      text += str;
+    return text;
 }
   //
 
@@ -145,3 +170,5 @@ vector<int> splitDigits(integral auto n) {
   return v;
 }
 //
+
+#endif // TEMPLATE_H
