@@ -47,6 +47,7 @@ using namespace vs;
 #define ll long long
 #define cauto const auto
 #define all(x) std::begin(x), std::end(x)
+#define input_assert(is) assert(is.good() && "Input failure");
 //
 
 // concepts
@@ -82,37 +83,38 @@ inline void fast_io() {
   cin.tie(NULL);
 }
 
-inline void clear(int delim = '\n') {
-  cin.ignore(numeric_limits<streamsize>::max(), delim);
-  cin.clear();
+inline void clear(int delim = '\n', std::istream& is = cin) {
+  is.ignore(numeric_limits<streamsize>::max(), delim);
+  is.clear();
 }
 
 template <istreamable T = int, signed_integral N = int>
-void discard(N n = 1) {
+void discard(N n = 1, std::istream& is = cin) {
   // https://stackoverflow.com/questions/62940748/why-stdistream-iterator-with-multiple-copy-n-always-writes-firs-value
   // This comes down to a perhaps unintuitive fact of istream_iterator:
   //    it doesn't read when you dereference it, but instead when you advance
   //    (or construct) it.
-  istream_iterator<T> it{cin};
+  istream_iterator<T> it{is};
   advance(it, n - 1, istream_iterator<T>{});
 }
 
 // Fold expression, parameter
 // packshttps://www.scs.stanford.edu/~dm/blog/param-pack.html
-// (See testGetInput for usage)
+// Returns a tuple, which can be destructured. (See testGetInput for usage)
 template <istreamable ...T>
-auto input() {
+tuple<T...> input(std::istream& is = cin) {
   tuple<T...> tpl;
-  apply([](auto &...args) { (cin >> ... >> args); }, tpl);
-  assert(cin.good() && "Input failure");
+  apply([&is](auto &...args) { (is >> ... >> args); }, tpl);
+  input_assert(is);
   return tpl;
 }
 
-template <semiregular T> vector<T>
-input(signed_integral auto n) {
+// Read 'n' objects of type 'T', and return a vector
+template <semiregular T>
+vector<T> input(signed_integral auto n, std::istream& is = cin) {
   vector<T> vec(n);
-  copy_n(istream_iterator<T>(cin), n, begin(vec));
-  assert(cin.good() && "Input failure");
+  copy_n(istream_iterator<T>(is), n, begin(vec));
+  input_assert(is);
   return vec;
 }
 
