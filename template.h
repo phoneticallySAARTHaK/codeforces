@@ -30,7 +30,10 @@ using std::signed_integral;
 using std::streamsize;
 using std::string;
 using std::tuple;
+using std::unreachable_sentinel_t;
 using std::unreachable_sentinel;
+using std::default_sentinel_t;
+using std::default_sentinel;
 using std::vector;
 using std::operator>>;
 using std::operator<<;
@@ -45,13 +48,13 @@ namespace rs = std::ranges;
 namespace vs = std::views;
 using namespace rs;
 using namespace vs;
+using ll = long long int;
 //
 
 // #defines
 #define endl '\n'
 #define YES "YES"
 #define NO "NO"
-#define ll long long
 #define cauto const auto
 #define all_of(x) std::begin(x), std::end(x)
 #define input_assert(is) assert(is.good() && "Input failure");
@@ -94,9 +97,11 @@ struct increment {
 struct decrement {
   auto operator()(signed_integral auto p) { return --p; }
 };
-  //
 
-  // Input Utils
+inline constexpr bool isEven(integral auto n) { return n % 2 == 0; }
+//
+
+// Input Utils
 inline void fast_io() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
