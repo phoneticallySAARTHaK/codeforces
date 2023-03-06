@@ -12,6 +12,7 @@ using std::cin;
 using std::conjunction;
 using std::cout;
 using std::integral;
+using std::invoke;
 using std::ios_base;
 using std::is_fundamental;
 using std::is_integral;
@@ -31,6 +32,7 @@ using std::unreachable_sentinel;
 using std::vector;
 using std::operator>>;
 using std::operator<<;
+
 //
 
 // using directives
@@ -77,7 +79,13 @@ inline ostream &operator<<(ostream &os, pair<T, T> &p) {
 } // namespace std
 //
 
-// utility functions
+// Utility functions
+  // Functors
+[[maybe_unused]] cauto increment = [](signed_integral auto &p) { p++; };
+[[maybe_unused]] cauto decrement = [](signed_integral auto &p) { p--; };
+  //
+
+  // Input Utils
 inline void fast_io() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
@@ -110,13 +118,14 @@ tuple<T...> input(std::istream& is = cin) {
 }
 
 // Read 'n' objects of type 'T', and return a vector
-template <istreamable T>
-vector<T> input(signed_integral auto n, std::istream& is = cin) {
+template <istreamable T, typename Proj = std::identity >
+vector<T> input(signed_integral auto n, Proj proj = {}, std::istream& is = cin) {
   vector<T> vec(n);
-  for_each(vec, [&is](auto &el) { is >> el; });
+  for_each(vec, [&is, &proj](auto &el) { is >> el; invoke(proj, el);});
   input_assert(is);
   return vec;
 }
+  //
 
 vector<int> splitDigitsReversed(integral auto n) {
   vector<int> v;
