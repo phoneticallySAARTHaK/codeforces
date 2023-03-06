@@ -32,7 +32,10 @@ using std::unreachable_sentinel;
 using std::vector;
 using std::operator>>;
 using std::operator<<;
-
+using std::operator""s;
+using std::operator""sv;
+using std::string_view;
+using sv = string_view;
 //
 
 // using directives
