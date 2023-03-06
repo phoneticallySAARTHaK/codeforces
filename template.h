@@ -110,10 +110,10 @@ tuple<T...> input(std::istream& is = cin) {
 }
 
 // Read 'n' objects of type 'T', and return a vector
-template <semiregular T>
+template <istreamable T>
 vector<T> input(signed_integral auto n, std::istream& is = cin) {
   vector<T> vec(n);
-  copy_n(istream_iterator<T>(is), n, begin(vec));
+  for_each(vec, [&is](auto &el) { is >> el; });
   input_assert(is);
   return vec;
 }
