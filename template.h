@@ -147,11 +147,11 @@ vector<T> input(size_type_t size, Proj proj = {}, std::istream& is = cin) {
 // Read all input as string
 template <rd_mode mode = rd_mode::buffer>
 string input(size_type_t size, std::istream& is = cin) {
-    string text, str;
-    text.reserve(size);
-    while (ssize(text) < size && is >> str)
-      text += str;
-    return text;
+  string text, str;
+  text.reserve(size);
+  while (ssize(text) < size && is >> str)
+    text += str;
+  return text;
 }
   //
 
