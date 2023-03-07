@@ -19,6 +19,7 @@ using std::ios_base;
 using std::is_fundamental;
 using std::is_integral;
 using std::istream_iterator;
+using std::ostream_iterator;
 using std::map;
 using std::numeric_limits;
 using std::pair;
@@ -98,15 +99,14 @@ inline ostream &operator<<(ostream &os, pair<T, T> &p) {
 [[maybe_unused]] constexpr auto decrement{
     [](signed_integral auto p) { return --p; }};
 
-[[maybe_unused]] constexpr auto truthy {
-  [] (convertible_to<bool> auto p) { return p == true; }
-};
+[[maybe_unused]] constexpr auto truthy{
+    [](convertible_to<bool> auto p) { return p == true; }};
 
-[[maybe_unused]] constexpr auto falsy {
-  [] (convertible_to<bool> auto p) { return p == false; }
-};
+[[maybe_unused]] constexpr auto falsy{
+    [](convertible_to<bool> auto p) { return p == false; }};
 
-inline constexpr bool isEven(integral auto n) { return n % 2 == 0; }
+[[maybe_unused]] constexpr auto isEven{
+    [](integral auto n) { return n % 2 == 0; }};
 //
 
 // Input Utils
@@ -130,6 +130,16 @@ void discard(N n = 1, std::istream& is = cin) {
   //    (or construct) it.
   istream_iterator<T> it{is};
   advance(it, n - 1, istream_iterator<T>{});
+}
+
+template<istreamable T>
+auto isr(std::istream& is = cin) {
+  return subrange(istream_iterator<T>{is}, istream_iterator<T>{});
+}
+
+template<ostreamable T>
+auto osr(std::ostream& os = cout) {
+  return subrange(ostream_iterator<T>{os}, ostream_iterator<T>{});
 }
 
 enum class rd_mode {
