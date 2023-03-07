@@ -41,6 +41,7 @@ using std::operator""s;
 using std::operator""sv;
 using std::string_view;
 using sv = string_view;
+using std::convertible_to;
 //
 
 // using directives
@@ -56,7 +57,7 @@ using ll = long long int;
 #define YES "YES"
 #define NO "NO"
 #define cauto const auto
-#define all_of(x) std::begin(x), std::end(x)
+#define ALL(x) std::begin(x), std::end(x)
 #define input_assert(is) assert(is.good() && "Input failure");
 #define size_type_t const signed_integral auto
 //
@@ -90,12 +91,18 @@ inline ostream &operator<<(ostream &os, pair<T, T> &p) {
 
 // Utility functions
   // Functors
-struct increment {
-  auto operator()(signed_integral auto p) { return ++p; }
+[[maybe_unused]] constexpr auto increment{
+    [](signed_integral auto p) { return ++p; }};
+
+[[maybe_unused]] constexpr auto decrement{
+    [](signed_integral auto p) { return --p; }};
+
+[[maybe_unused]] constexpr auto truthy {
+  [] (convertible_to<bool> auto p) { return p == true; }
 };
 
-struct decrement {
-  auto operator()(signed_integral auto p) { return --p; }
+[[maybe_unused]] constexpr auto falsy {
+  [] (convertible_to<bool> auto p) { return p == false; }
 };
 
 inline constexpr bool isEven(integral auto n) { return n % 2 == 0; }
