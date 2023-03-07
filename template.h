@@ -58,6 +58,7 @@ using ll = long long int;
 #define NO "NO"
 #define cauto const auto
 #define ALL(x) std::begin(x), std::end(x)
+#define RALL(x) std::rbegin(x), std::rend(x)
 #define input_assert(is) assert(is.good() && "Input failure");
 #define size_type_t const signed_integral auto
 //
