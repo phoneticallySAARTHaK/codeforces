@@ -4,6 +4,14 @@ void solve() {
   cauto [n] = input<int>();
   vector<bool> levels(n, false);
   using ist = istream_iterator<int>;
-  for_each(ist{cin}, ist{}, [&levels](cauto el) { levels[el - 1] = true; });
-  cout << (any_of(levels, falsy) ? "Oh, my keyboard!" : "I become the guy." ) ;
+  cauto flag = [&levels](cauto el) { levels[el - 1] = true; };
+
+  for (auto i : iota(0, 2)) {
+    auto [s] = input<int>();
+    auto v{input<int>(s)};
+    for_each(v, flag);
+  }
+
+
+  cout << (any_of(levels, falsy) ? "Oh, my keyboard!" : "I become the guy.");
 }
