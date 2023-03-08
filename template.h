@@ -180,9 +180,25 @@ vector<T> input(integral let size, Proj proj = {}, std::istream& is = cin) {
 }
 
 namespace tokens {
+
 inline string input(std::istream& is = cin) {
   string text, str;
   while (is >> str) text += str;
+  return text;
+}
+
+inline string input(sv delim = ""sv, std::istream& is = cin) {
+  input_assert(is);
+  string text, str;
+
+  while (is >> str) {
+    text += str;
+    text += delim;
+  };
+
+  auto excess = ssize(delim);
+  while (excess--) text.pop_back();
+
   return text;
 }
 
@@ -192,7 +208,22 @@ inline string input(signed_integral auto count, std::istream& is = cin) {
   while (count-- && is >> str) text += str;
   return text;
 }
+
+inline string input(signed_integral auto count, sv delim = ""sv, std::istream& is = cin) {
+  input_assert(is);
+  string text, str;
+
+  while (count-- && is >> str) {
+    text += str;
+    text += delim;
+  };
+
+  auto excess = ssize(delim);
+  while (excess--) text.pop_back();
+
+  return text;
 }
+} // namespace tokens
 
 namespace line {
 struct Flags {
@@ -212,7 +243,7 @@ inline string input(const Flags flags, std::istream &is = cin) {
   getline(is, text, flags.delim);
   return text;
 }
-}
+} // namespace line
   //
 
 vector<int> splitDigitsReversed(integral auto n) {
