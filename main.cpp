@@ -2,7 +2,7 @@
 
 void solve();
 
-int main() {
+fn main() -> int {
   try {
     fast_io();
     solve();

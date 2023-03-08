@@ -1,5 +1,5 @@
 #include "template.h"
 
-fn solve() {
+fn solve() -> void {
   //
 }
