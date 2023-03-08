@@ -3,41 +3,56 @@
 
 #include "template.h"
 
+void testInput() {
+  // Read one integer, and return as tuple
+  let [OneIntAsTuple] = input<int>();
 
-// getInput function, move vs copy test.
-// https://stackoverflow.com/questions/45694560/arguments-to-tuple-are-copied-instead-of-moved-when-returning-the-tuple-from-a-f
-struct Bar {
-  int a;
-  string b{"Bar"};
-  Bar() { cout << "default\n"; }
-  Bar(int a, const string &b) : a{a}, b{b} { cout << "direct\n"; }
-  Bar(int a, string &&b) : a{a}, b{std::move(b)} { cout << "direct move b\n"; }
-  Bar(const Bar &other) : a{other.a}, b{other.b} { cout << "const copy\n"; }
-  Bar(Bar &&other) : a{std::move(other.a)}, b{std::move(other.b)} {
-    cout << "move\n";
-  }
-  Bar &operator=(const Bar &other) {
-    a = other.a;
-    b = other.b;
-    cout << "const assign\n";
-    return *this;
-  }
+  // Read one string, and return as tuple
+  let [OneStringAsTuple] = input<string>();
 
-  Bar &operator=(Bar &&other) {
-    a = std::move(other.a);
-    b = std::move(other.b);
-    cout << "move assign\n";
-    return *this;
-  }
+  // Read n int and returns a vector of ints
+  int n = 2;
+  let VectorOfIntsN = input<int>(n);
 
-  operator int() { return a; }
+  // Read all tokens, and return them as a joint string
+  let AllTokensWithoutWhitespace = tokens::input();
 
-  friend std::istream &operator>>(std::istream &is, Bar &b) { cout << "Bar cin\n"; return is >> b.a; }
-};
+  // Read 2 tokens, and return them as a joint string
+  let TwoTokensWithoutWhitespace = tokens::input(2);
 
-void testGetInput() {
-  auto [n, i] = getInput<int, Bar>();
-  cout << n << i;
+  // Read one single line, without leading whitespace.
+  let LineWithoutLeadingWhitespace = line::input();
+
+  // Read upto '\t' char
+  let CharactersTillDelimiterWithoutLeadingWhitespace = line::input({.delim =  '\t'});
+
+  // Read one line, and do not skip leading whitespace
+  let LineWithLeadingWhitespace = line::input({ .no_trim = true });
+
+  // Read upto '\t' char
+  let CharactersTillDelimiterWithLeadingWhitespace = line::input({.delim =  '\t', .no_trim = true});
+
+  cout << endl;
+
+  cout << "One Int As Tuple: " << OneIntAsTuple << endl;
+
+  cout << "One String As Tuple: " << OneStringAsTuple << endl;
+
+  cout << "Vector Of Ints: ";
+  for (auto i : VectorOfIntsN) cout << i << ' ';
+  cout << endl;
+
+  cout << "All Tokens Without Whitespace: " << AllTokensWithoutWhitespace << endl;
+
+  cout << "Two Tokens Without Whitespace: " << TwoTokensWithoutWhitespace << endl;
+
+  cout << "Line Without Leading Whitespace: " << LineWithoutLeadingWhitespace << endl;
+
+  cout << "Characters Till Delimiter Without Leading Whitespace: " << CharactersTillDelimiterWithoutLeadingWhitespace << endl;
+
+  cout << "Line With Leading Whitespace: " << LineWithLeadingWhitespace << endl;
+
+  cout << "Characters Till Delimiter With Leading Whitespace: " << CharactersTillDelimiterWithLeadingWhitespace << endl;
 }
 
 #endif // TESTS_H

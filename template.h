@@ -62,6 +62,7 @@ using ll = long long int;
 // macros
 #define let auto const
 #define mut mutable
+#define fn auto
 #define NL '\n'
 #define YES "YES"
 #define NO "NO"
@@ -98,6 +99,10 @@ inline ostream& operator<<(ostream& os, const pair<T, U>& p) {
 //
 
 // Utility functions
+inline bool operator==(const string& str, const char ch) {
+  return size(str) == 1 && str[0] == ch;
+}
+
   // Functors
 [[maybe_unused]] let increment{
     [](signed_integral let p) { return p + 1; }};
@@ -122,7 +127,7 @@ inline void fast_io() {
 }
 
 inline void clear(integral let count = numeric_limits<streamsize>::max(),
-                  integral let delim = '\n',
+                  const char delim = '\n',
                   std::istream& is = cin) {
   is.ignore(count, delim);
   is.clear();
@@ -151,11 +156,6 @@ auto osr(std::ostream& os = cout) {
   return subrange(ost{os}, ost{});
 }
 
-enum class rd_mode {
-  buffer,
-  vector,
-};
-
 // Fold expression, parameter packs
 // https://www.scs.stanford.edu/~dm/blog/param-pack.html
 // Returns a tuple, which can be destructured. (See testGetInput for usage)
@@ -179,14 +179,39 @@ vector<T> input(integral let size, Proj proj = {}, std::istream& is = cin) {
   return vec;
 }
 
-// Read all input as string
-template <rd_mode mode = rd_mode::buffer>
-string input(integral let size, std::istream& is = cin) {
+namespace tokens {
+inline string input(std::istream& is = cin) {
   string text, str;
-  text.reserve(size);
-  while (ssize(text) < size && is >> str)
-    text += str;
+  while (is >> str) text += str;
   return text;
+}
+
+
+inline string input(signed_integral auto count, std::istream& is = cin) {
+  string text, str;
+  while (count-- && is >> str) text += str;
+  return text;
+}
+}
+
+namespace line {
+struct Flags {
+  char delim{'\n'};
+  bool no_trim{false};
+};
+
+inline string input(std::istream &is = cin) {
+  string text;
+  getline(is >> std::ws, text);
+  return text;
+}
+
+inline string input(const Flags flags, std::istream &is = cin) {
+  string text;
+  if (!flags.no_trim) is >> std::ws;
+  getline(is, text, flags.delim);
+  return text;
+}
 }
   //
 
