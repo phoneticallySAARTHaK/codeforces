@@ -86,7 +86,7 @@ concept streamable = (istreamable<T> && ostreamable<T>);
 namespace std {
 
 template <istreamable T, istreamable U>
-inline istream& operator>>(istream& is, const pair<T, U>& p) {
+inline istream& operator>>(istream& is, pair<T, U>& p) {
   return is >> p.first >> p.second;
 }
 
@@ -104,19 +104,19 @@ inline bool operator==(const string& str, const char ch) {
 }
 
   // Functors
-[[maybe_unused]] let increment{
+constexpr auto increment{
     [](signed_integral let p) { return p + 1; }};
 
-[[maybe_unused]] let decrement{
+constexpr auto decrement{
     [](signed_integral let p) { return p - 1; }};
 
-[[maybe_unused]] let truthy{
+constexpr auto truthy{
     [](convertible_to<bool> let p) { return p == true; }};
 
-[[maybe_unused]] let falsy{
+constexpr auto falsy{
     [](convertible_to<bool> let p) { return p == false; }};
 
-[[maybe_unused]] let even{
+constexpr auto even{
     [](integral let n) { return n % 2 == 0; }};
 //
 
