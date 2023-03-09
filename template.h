@@ -261,18 +261,11 @@ vector<int> splitDigits(integral auto n) {
   return v;
 }
 
-inline char baseAlph(const int ch) {
-  if (ch >= 'A' && ch <= 'Z') {
-    return 'A';
-  }
-  else if (ch >= 'a' && ch <= 'z') {
-    return 'a';
-  }
-  else {
-    assert(isalpha(ch));
-    return 0;
-  }
+inline int alphIndex(const int ch) {
+  assert(isupper(ch) || islower(ch));
+  return ch - (isupper(ch) ? 'A' : 'a');
 }
+
 //
 
 #endif // TEMPLATE_H
