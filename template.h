@@ -8,6 +8,7 @@
 // using declarations
 using std::accumulate;
 using std::apply;
+using std::array;
 using std::cerr;
 using std::cin;
 using std::conjunction;
