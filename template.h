@@ -259,6 +259,19 @@ vector<int> splitDigits(integral auto n) {
   rs::reverse(v);
   return v;
 }
+
+inline char baseAlph(const int ch) {
+  if (ch >= 'A' && ch <= 'Z') {
+    return 'A';
+  }
+  else if (ch >= 'a' && ch <= 'z') {
+    return 'a';
+  }
+  else {
+    assert(isalpha(ch));
+    return 0;
+  }
+}
 //
 
 #endif // TEMPLATE_H

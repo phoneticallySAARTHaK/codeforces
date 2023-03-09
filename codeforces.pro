@@ -11,6 +11,4 @@ SOURCES += \
 
 HEADERS += \
     template.h \
-    tests.h
-
-DISTFILES +=
+#    tests.h
