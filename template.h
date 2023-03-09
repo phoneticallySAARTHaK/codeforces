@@ -11,6 +11,7 @@ using std::apply;
 using std::array;
 using std::cerr;
 using std::cin;
+using std::common_type_t;
 using std::conjunction;
 using std::convertible_to;
 using std::cout;
@@ -268,6 +269,18 @@ inline int alphIndex(const int ch) {
   return ch - (isupper(ch) ? 'A' : 'a');
 }
 
+// Returns variables with given value as a tuple
+template <typename ...T>
+tuple<T...> init(const common_type_t<T...>& val) {
+  tuple<T...> tpl;
+  apply([&val](auto& ...args) { (args = ... = val); }, tpl);
+  return tpl;
+}
+
+template <typename ...T>
+void assign(const common_type_t<T...>& val, T&... args) {
+  invoke([&val](auto& ...args) { (args = ... = val); }, args...);
+}
 //
 
 #endif // TEMPLATE_H
