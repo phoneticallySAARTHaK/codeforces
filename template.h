@@ -70,6 +70,7 @@ using ll = long long int;
 #define ALL(x) std::begin(x), std::end(x)
 #define RALL(x) std::rbegin(x), std::rend(x)
 #define input_assert(is) assert(is.good() && "Input failure");
+#define CIN(type) istream_iterator<type>(cin), istream_iterator<type>()
 //
 
 // concepts
@@ -142,7 +143,8 @@ void discard(const N n = 1, std::istream& is = cin) {
   //    it doesn't read when you dereference it, but instead when you advance
   //    (or construct) it.
   using ist = istream_iterator<T>;
-  advance(ist{is}, n - 1, ist{});
+  auto it = ist{is};
+  advance(it, n - 1, ist{});
 }
 
 template<istreamable T>
