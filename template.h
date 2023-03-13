@@ -120,10 +120,10 @@ constexpr auto decrement{
     [](signed_integral let p) { return p - 1; }};
 
 constexpr auto truthy{
-    [](convertible_to<bool> let p) { return p == true; }};
+    [](convertible_to<bool> let p) { return static_cast<bool>(p) == true; }};
 
 constexpr auto falsy{
-    [](convertible_to<bool> let p) { return p == false; }};
+    [](convertible_to<bool> let p) { return static_cast<bool>(p) == false; }};
 
 constexpr auto even{
     [](integral let n) { return n % 2 == 0; }};
