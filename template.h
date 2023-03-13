@@ -72,6 +72,7 @@ using ll = long long int;
 #define RALL(x) std::rbegin(x), std::rend(x)
 #define input_assert(is) assert(is.good() && "Input failure");
 #define CIN(type) istream_iterator<type>(cin), istream_iterator<type>()
+#define OST(R) ostream_iterator<range_value_t<R>>
 //
 
 // concepts
@@ -255,6 +256,19 @@ inline string input(const Flags flags, std::istream &is = cin) {
 }
 } // namespace line
   //
+
+// Output utils
+template <range R, ostreamable E>
+inline std::ostream& output(R& r, const char* delim = " ", const E& end = " ", std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, delim));
+  return  os << end;
+}
+
+template <range R, ostreamable E>
+inline std::ostream& output(R& r, const char delim = ' ', const E& end = " ", std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, string{delim}.c_str()));
+  return os << end;
+}
 
 vector<int> splitDigitsReversed(integral auto n) {
   vector<int> v;
