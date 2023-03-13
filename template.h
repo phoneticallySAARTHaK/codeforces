@@ -66,8 +66,8 @@ using ll = long long int;
 #define mut mutable
 #define fn auto
 #define NL '\n'
-#define YES "YES"
-#define NO "NO"
+#define YES "YES\n"
+#define NO "NO\n"
 #define ALL(x) std::begin(x), std::end(x)
 #define RALL(x) std::rbegin(x), std::rend(x)
 #define input_assert(is) assert(is.good() && "Input failure");
@@ -270,7 +270,11 @@ inline std::ostream& output(R& r, const char delim = ' ', const E& end = " ", st
   return os << end;
 }
 
-inline std::ostream& output(const ostreamable auto& t, let& delim = " ", std::ostream& os = cout) {
+inline std::ostream& output(const ostreamable auto& t, std::ostream& os = cout) {
+  return os << t;
+}
+
+inline std::ostream& output(const ostreamable auto& t, let& delim, std::ostream& os = cout) {
   return os << t << delim;
 }
 
