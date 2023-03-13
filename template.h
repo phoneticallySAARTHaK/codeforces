@@ -98,6 +98,12 @@ inline ostream& operator<<(ostream& os, const pair<T, U>& p) {
   return os << p.first << ' ' << p.second;
 }
 
+template <istreamable T, size_t N>
+inline istream& operator>>(istream& is, array<T, N>& arr) {
+  ranges::for_each(arr, [&is](auto& el) mut { is >> el; });
+  return is;
+}
+
 } // namespace std
 //
 
