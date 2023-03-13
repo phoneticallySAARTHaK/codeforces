@@ -270,6 +270,10 @@ inline std::ostream& output(R& r, const char delim = ' ', const E& end = " ", st
   return os << end;
 }
 
+inline std::ostream& output(const ostreamable auto& t, let& delim = " ", std::ostream& os = cout) {
+  return os << t << delim;
+}
+
 vector<int> splitDigitsReversed(integral auto n) {
   vector<int> v;
   do {
