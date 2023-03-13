@@ -66,8 +66,8 @@ using ll = long long int;
 #define mut mutable
 #define fn auto
 #define NL '\n'
-#define YES "YES"
-#define NO "NO"
+#define YES "YES\n"
+#define NO "NO\n"
 #define ALL(x) std::begin(x), std::end(x)
 #define RALL(x) std::rbegin(x), std::rend(x)
 #define input_assert(is) assert(is.good() && "Input failure");
@@ -258,19 +258,35 @@ inline string input(const Flags flags, std::istream &is = cin) {
   //
 
 // Output utils
-template <range R, ostreamable E>
+template <range R>
+inline std::ostream& output(R& r, const char* delim = " ", std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, delim));
+  return  os;
+}
+
+template <range R>
+inline std::ostream& output(R& r, const char delim = ' ', std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, string{delim}.c_str()));
+  return os;
+}
+
+template <range R, ostreamable E = string>
 inline std::ostream& output(R& r, const char* delim = " ", const E& end = " ", std::ostream& os = cout) {
   copy(r, ostream_iterator<range_value_t<R>>(os, delim));
   return  os << end;
 }
 
-template <range R, ostreamable E>
+template <range R, ostreamable E = string>
 inline std::ostream& output(R& r, const char delim = ' ', const E& end = " ", std::ostream& os = cout) {
   copy(r, ostream_iterator<range_value_t<R>>(os, string{delim}.c_str()));
   return os << end;
 }
 
-inline std::ostream& output(const ostreamable auto& t, let& delim = " ", std::ostream& os = cout) {
+inline std::ostream& output(const ostreamable auto& t, std::ostream& os = cout) {
+  return os << t;
+}
+
+inline std::ostream& output(const ostreamable auto& t, let& delim, std::ostream& os = cout) {
   return os << t << delim;
 }
 
