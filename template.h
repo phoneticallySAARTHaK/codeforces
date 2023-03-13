@@ -258,13 +258,25 @@ inline string input(const Flags flags, std::istream &is = cin) {
   //
 
 // Output utils
-template <range R, ostreamable E>
+template <range R>
+inline std::ostream& output(R& r, const char* delim = " ", std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, delim));
+  return  os;
+}
+
+template <range R>
+inline std::ostream& output(R& r, const char delim = ' ', std::ostream& os = cout) {
+  copy(r, ostream_iterator<range_value_t<R>>(os, string{delim}.c_str()));
+  return os;
+}
+
+template <range R, ostreamable E = string>
 inline std::ostream& output(R& r, const char* delim = " ", const E& end = " ", std::ostream& os = cout) {
   copy(r, ostream_iterator<range_value_t<R>>(os, delim));
   return  os << end;
 }
 
-template <range R, ostreamable E>
+template <range R, ostreamable E = string>
 inline std::ostream& output(R& r, const char delim = ' ', const E& end = " ", std::ostream& os = cout) {
   copy(r, ostream_iterator<range_value_t<R>>(os, string{delim}.c_str()));
   return os << end;
