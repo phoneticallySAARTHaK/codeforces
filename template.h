@@ -282,12 +282,12 @@ inline std::ostream& output(R& r, const char delim, const E& end, std::ostream& 
   return os << end;
 }
 
-inline std::ostream& output(const ostreamable auto& t, std::ostream& os = cout) {
-  return os << t;
-}
-
-inline std::ostream& output(const ostreamable auto& t, let& delim, std::ostream& os = cout) {
-  return os << t << delim;
+template <ostreamable ...T>
+inline std::ostream& output(const T&... args) {
+  invoke([](let& ...args) {
+     (... , (cout << args, cout << ' '));
+  }, args...);
+  return cout;
 }
 
 vector<int> splitDigitsReversed(integral auto n) {
