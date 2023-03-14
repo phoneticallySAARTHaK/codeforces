@@ -287,7 +287,7 @@ inline std::ostream& output(const T&... args) {
   invoke([](let& ...args) {
      (... , (cout << args, cout << ' '));
   }, args...);
-  return cout;
+  return cout << NL;
 }
 
 vector<int> splitDigitsReversed(integral auto n) {
