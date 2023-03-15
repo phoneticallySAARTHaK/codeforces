@@ -180,6 +180,28 @@ tuple<T...> input(std::istream& is = cin) {
   return tpl;
 }
 
+// https://stackoverflow.com/a/38894158
+template <size_t I,typename T>
+struct tuple_n{
+    template< typename...Args> using type = typename tuple_n<I-1, T>::template type<T, Args...>;
+};
+
+template <typename T>
+struct tuple_n<0, T> {
+    template<typename...Args> using type = std::tuple<Args...>;
+};
+
+template <size_t I,typename T>  using tuple_of = typename tuple_n<I,T>::template type<>;
+
+template<size_t N, istreamable T>
+auto input(std::istream& is = cin) {
+  tuple_of<N, T> tpl;
+  apply([&is](auto& ...args) { (is >> ... >> args); }, tpl);
+  input_assert(is);
+  return tpl;
+}
+
+
 // Read 'n' objects of type 'T', and return a vector
 template <istreamable T, typename Proj = std::identity>
 vector<T> input(integral let size, Proj proj = {}, std::istream& is = cin) {
