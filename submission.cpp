@@ -385,3 +385,43 @@ inline auto tolower(const string& str) {
 //
 
 #endif // TEMPLATE_H
+
+#define TEST_CASES
+
+inline fn solve()->void {
+  let [n, days] = input<int, string>();
+  array<bool, 26> alphabets{};
+
+  auto prev{days[0]};
+  alphabets[alphIndex(prev)] = true;
+  for (int i{1}; i < ssize(days); prev = days[i], i++) {
+    let day = days[i];
+    if (prev == day) continue;
+
+    if (alphabets[alphIndex(day)]) {
+      cout << NO;
+      return;
+    }
+
+    alphabets[alphIndex(day)] = true;
+  }
+
+  cout << YES;
+}
+
+inline void solve();
+
+fn main() -> int {
+  try {
+    fast_io();
+#ifdef TEST_CASES
+    auto [t] = input<int>();
+    while (t--) solve();
+#else
+    solve();
+#endif
+    cout << endl;
+  } catch (...) {
+    cerr << "Catch-all handler" << endl;
+  }
+}
