@@ -349,6 +349,8 @@ void assign(const common_type_t<T...>& val, T&... args) {
   invoke([&val](auto& ...args) { (args = ... = val); }, args...);
 }
 
+
+// string utils
 inline auto toupper(string& str) {
   for_each(str, [](auto& ch) { ch = std::toupper(ch);} );
   return str;
@@ -360,16 +362,25 @@ inline auto tolower(string& str) {
 }
 
 template <typename T>
-concept non_owning_string = same_as<const char *, T> || same_as<string_view, T>;
+concept non_modifiable_string =
+    same_as<const char *, T> || same_as<string_view, T>;
 
-inline auto toupper(non_owning_string auto str) {
+inline auto toupper(const non_modifiable_string auto& str) {
   string s{str};
   return toupper(s);
 }
 
-inline auto tolower(non_owning_string auto str) {
+inline auto tolower(const non_modifiable_string auto& str) {
   string s{str};
   return tolower(s);
+}
+
+inline auto toupper(const string& str) {
+  return toupper(string_view{str});
+}
+
+inline auto tolower(const string& str) {
+  return tolower(string_view{str});
 }
 //
 
