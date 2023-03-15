@@ -382,6 +382,15 @@ inline auto toupper(const string& str) {
 inline auto tolower(const string& str) {
   return tolower(string_view{str});
 }
+
+template<typename T, typename U>
+concept subtractable = requires (T t, U u) { t - u;};
+
+template <typename T,typename U>
+requires subtractable<T, U>
+auto pair_diff(const pair<T, U>& p) {
+  return p.first - p.second;
+}
 //
 
 #endif // TEMPLATE_H
