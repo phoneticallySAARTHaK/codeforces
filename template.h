@@ -45,6 +45,7 @@ using std::tuple;
 using std::unreachable_sentinel;
 using std::unreachable_sentinel_t;
 using std::vector;
+using std::same_as;
 using std::operator>>;
 using std::operator<<;
 //
@@ -346,6 +347,29 @@ tuple<T...> init(const common_type_t<T...>& val) {
 template <typename ...T>
 void assign(const common_type_t<T...>& val, T&... args) {
   invoke([&val](auto& ...args) { (args = ... = val); }, args...);
+}
+
+inline auto toupper(string& str) {
+  for_each(str, [](auto& ch) { ch = std::toupper(ch);} );
+  return str;
+}
+
+inline auto tolower(string& str) {
+  for_each(str, [](auto& ch) { ch = std::tolower(ch);} );
+  return str;
+}
+
+template <typename T>
+concept non_owning_string = same_as<const char *, T> || same_as<string_view, T>;
+
+inline auto toupper(non_owning_string auto str) {
+  string s{str};
+  return toupper(s);
+}
+
+inline auto tolower(non_owning_string auto str) {
+  string s{str};
+  return tolower(s);
 }
 //
 
