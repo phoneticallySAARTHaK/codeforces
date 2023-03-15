@@ -1,6 +1,7 @@
 #include "template.h"
+#include "solve.cpp"
 
-void solve();
+inline void solve();
 
 fn main() -> int {
   try {
@@ -11,7 +12,6 @@ fn main() -> int {
 #else
     solve();
 #endif
-
     cout << endl;
   } catch (...) {
     cerr << "Catch-all handler" << endl;

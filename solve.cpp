@@ -2,6 +2,6 @@
 
 //#define TEST_CASES
 
-fn solve() -> void {
+inline fn solve()->void {
   //
 }
