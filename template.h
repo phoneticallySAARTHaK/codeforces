@@ -365,12 +365,12 @@ template <typename T>
 concept non_modifiable_string =
     same_as<const char *, T> || same_as<string_view, T>;
 
-inline auto toupper(const non_modifiable_string auto& str) {
+inline auto toupper(const non_modifiable_string auto str) {
   string s{str};
   return toupper(s);
 }
 
-inline auto tolower(const non_modifiable_string auto& str) {
+inline auto tolower(const non_modifiable_string auto str) {
   string s{str};
   return tolower(s);
 }
