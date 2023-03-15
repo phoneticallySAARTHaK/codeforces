@@ -31,6 +31,8 @@ using std::map;
 using std::numeric_limits;
 using std::ostream_iterator;
 using std::pair;
+using std::make_pair;
+using std::make_tuple;
 using std::ref;
 using std::semiregular;
 using std::set;
@@ -289,6 +291,8 @@ inline std::ostream& output(const T&... args) {
   }, args...);
   return cout << NL;
 }
+
+
 
 vector<int> splitDigitsReversed(integral auto n) {
   vector<int> v;
